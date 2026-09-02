@@ -1,0 +1,90 @@
+﻿@page
+@model ContrModel
+@{
+    Layout = "~/Pages/Dashboard/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<div class="container mt-5" >
+
+    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3" style="text-align:center"> إدارة الوظائف </h6>
+        </div>
+    </div>
+    <h1 class="text-center text-primary mb-4"> </h1>
+
+    <!-- جدول التصنيفات -->
+    <div class="table-responsive card-header p-0 position-relative mt-n4 mx-3 z-index-2 ">
+
+        <table class="table table-bordered table-striped text-center">
+            <thead class="bg-gradient-primary text-white">
+                <tr>
+                    <th>التصنيف</th>
+                    <th>رقم العقد</th>
+                    <th>التاريخ</th>
+                    <th>المستقل</th>
+                    <th>صاحب العمل</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- العقود المكتملة -->
+                @if (Model.CompletedContracts.Any())
+                {
+                    @foreach (var contract in Model.CompletedContracts)
+                    {
+                        <tr>
+                            <td class="bg-success text-white">مكتمل</td>
+                            <td>@contract.Id</td>
+                            <td>@contract.CompletedOn.ToString("yyyy-MM-dd")</td>
+                            <td>@contract.Freelancer.FirstName @contract.Freelancer.LastName</td>
+                            <td>@contract.Employer.FirstName @contract.Employer.LastName</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+              
+                }
+
+                <!-- العقود الجارية -->
+                @if (Model.OngoingContracts.Any())
+                {
+                    @foreach (var contract in Model.OngoingContracts)
+                    {
+                        <tr>
+                            <td class="bg-info text-white">جاري</td>
+                            <td>@contract.Id</td>
+                            <td>@contract.CreatedOn.ToString("yyyy-MM-dd")</td>
+                            <td>@contract.Freelancer.FirstName @contract.Freelancer.LastName</td>
+                            <td>@contract.Employer.FirstName @contract.Employer.LastName</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+        
+                }
+
+                <!-- العقود الملغاة -->
+                @if (Model.CanceledContracts.Any())
+                {
+                    @foreach (var contract in Model.CanceledContracts)
+                    {
+                        <tr>
+                            <td class="bg-danger text-white">ملغى</td>
+                            <td>@contract.Id</td>
+                            <td>@contract.DeletedOn?.ToString("yyyy-MM-dd")</td>
+                            <td>@contract.Freelancer.FirstName @contract.Freelancer.LastName</td>
+                            <td>@contract.Employer.FirstName @contract.Employer.LastName</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                  
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

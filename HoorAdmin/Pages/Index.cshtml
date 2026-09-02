@@ -1,0 +1,58 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = ViewData["Layout"]?.ToString() ?? "~/Pages/Shared/_Layout.cshtml";
+}
+
+<!-- Login Form -->
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg" style="width: 30rem; border-radius: 15px;">
+        <div class="card-body p-5">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold text-primary">Welcome Back</h3>
+                <p class="text-muted">Sign in to your account</p>
+            </div>
+            <form method="post">
+                @if (!ViewData.ModelState.IsValid && ViewData.ModelState[string.Empty] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <span>@ViewData.ModelState[string.Empty]?.Errors.FirstOrDefault()?.ErrorMessage</span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+                <div class="mb-3">
+                    <label for="email" class="form-label fw-semibold">Email</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-primary text-white">
+                            <i class="bi bi-envelope"></i>
+                        </span>
+                        <input asp-for="Email" id="email" type="email" class="form-control" placeholder="Enter your email" />
+                    </div>
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label fw-semibold">Password</label>
+                    <div class="input-group">
+                        <span class="input-group-text bg-primary text-white">
+                            <i class="bi bi-lock"></i>
+                        </span>
+                        <input asp-for="Password" id="password" type="password" class="form-control" placeholder="Enter your password" />
+                    </div>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg fw-bold">Sign In</button>
+                </div>
+            </form>
+            <div class="text-center mt-4">
+                <p class="text-muted">
+                    Don't have an account?
+                    <a href="/Register" class="text-primary fw-semibold">Sign up</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+

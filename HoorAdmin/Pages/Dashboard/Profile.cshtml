@@ -1,0 +1,193 @@
+﻿@page
+@model ProfileModel
+@{
+    Layout = "~/Pages/Dashboard/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<div class="profile-container" style="background:#f1f5f9">
+    <div class="profile-card">
+        <form enctype="multipart/form-data" method="post" asp-page-handler="UpdateProfile" asp-route-id="@Model.User.Id">
+            <input asp-for="User.Id" type="hidden" />
+
+            <!-- العنوان الرئيسي -->
+            <div class="profile-header">
+                <h2>تحديث الملف الشخصي</h2>
+                <p>قم بتحديث معلوماتك الشخصية وصورتك بسهولة.</p>
+            </div>
+
+            <!-- الصورة الشخصية -->
+            <div class="profile-picture-section">
+                <div class="avatar-wrapper">
+                    <img class="profile-pic" src="@Model.User.ProfileImageUrl" alt="الصورة الرمزية" />
+                    <label class="upload-label">
+                        <input name="ProfilePicture" type="file" accept="image/*" />
+                        <span>رفع صورة جديدة</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- الحقول الشخصية -->
+            <div class="form-grid">
+                <div class="form-field">
+                    <label>الاسم الأول</label>
+                    <input asp-for="User.FirstName" type="text" />
+                    <span asp-validation-for="User.FirstName" class="text-danger"></span>
+                </div>
+                <div class="form-field">
+                    <label>الاسم الأخير</label>
+                    <input asp-for="User.LastName" type="text" />
+                    <span asp-validation-for="User.LastName" class="text-danger"></span>
+                </div>
+                <div class="form-field">
+                    <label>البريد الإلكتروني</label>
+                    <input asp-for="User.Email" type="email" />
+                    <span asp-validation-for="User.Email" class="text-danger"></span>
+                </div>
+                <div class="form-field">
+                    <label>رقم الهاتف</label>
+                    <input asp-for="User.PhoneNumber" type="text" />
+                    <span asp-validation-for="User.PhoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-field">
+                    <label>الجنسية</label>
+                    <select asp-for="User.Location">
+                        <option value="" disabled>اختر الجنسية</option>
+                        <option selected value="@Model.User.Location">@Model.User.Location</option>
+                        <option value="السعودية">السعودية</option>
+                        <option value="مصر">مصر</option>
+                        <option value="الأردن">الأردن</option>
+                    </select>
+                    <span asp-validation-for="User.Location" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- زر التحديث -->
+            <div class="form-footer">
+                <button type="submit" class="button">تحديث الملف الشخصي</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    body {
+    background-color: #f5f6fa;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.profile-card {
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+
+
+.profile-header h2 {
+    font-size: 1.8em;
+    color: #2d89ef;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.profile-header p {
+    font-size: 0.9em;
+    color: #666;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture-section {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.avatar-wrapper .profile-pic {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #2d89ef;
+}
+
+.upload-label {
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #2d89ef;
+    cursor: pointer;
+}
+
+.upload-label input {
+    display: none;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.form-field label {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+    display: block;
+    color: #555;
+}
+
+.form-field input,
+.form-field select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    font-size: 0.9em;
+}
+
+.form-field input:focus,
+.form-field select:focus {
+    border-color: #2d89ef;
+}
+
+.form-footer {
+    text-align: center;
+}
+
+.form-footer .button {
+    background: #2d89ef;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.form-footer .button:hover {
+    background: #2163bf;
+}
+
+</style>

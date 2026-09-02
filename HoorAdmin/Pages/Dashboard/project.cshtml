@@ -1,0 +1,132 @@
+﻿@page
+@model projectModel
+@{
+    ViewData["Title"] = "project";
+}
+@{
+    Layout = "~/Pages/Dashboard/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+<main style="background: #f8f9fa; min-height: 100vh; padding: 20px;">
+    <h1></h1>
+    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3" style="text-align:center"> جميع المستقلين  </h6>
+        </div>
+    </div>
+    <h1></h1>
+    <h1 class="text-center text-primary mb-4"> </h1>
+
+    <div class="container">
+
+
+        <!-- قسم الإحصائيات -->
+        <div class="row mb-4" id="file-stats">
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 clickable" data-filter="pdf">
+                    <div class="card-body text-center">
+                        <i class="fa-regular fa-file-pdf fa-3x text-danger mb-3"></i>
+                        <h5 class="card-title">PDF Files</h5>
+                        <p class="card-text">130</p>
+                        <small class="text-muted">6.5GB</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 clickable" data-filter="image">
+                    <div class="card-body text-center">
+                        <i class="fa-regular fa-images fa-3x text-success mb-3"></i>
+                        <h5 class="card-title">Images</h5>
+                        <p class="card-text">115 Files</p>
+                        <small class="text-muted">3.5GB</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 clickable" data-filter="word">
+                    <div class="card-body text-center">
+                        <i class="fa-regular fa-file-word fa-3x text-primary mb-3"></i>
+                        <h5 class="card-title">Word Files</h5>
+                        <p class="card-text">110 Files</p>
+                        <small class="text-muted">3.2GB</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="card shadow-sm border-0 clickable" data-filter="csv">
+                    <div class="card-body text-center">
+                        <i class="fa-solid fa-file-csv fa-3x text-warning mb-3"></i>
+                        <h5 class="card-title">CSV Files</h5>
+                        <p class="card-text">99 Files</p>
+                        <small class="text-muted">2.9GB</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم الملفات -->
+        <div class="row" id="files-container">
+            @foreach (var freelancer in Model.OffersList)
+            {
+                <div class="col-lg-4 col-md-6 mb-4 file-box" data-type="pdf">
+                    <div class="card shadow-sm border-0 h-100">
+                        <div class="card-body text-center">
+                            <i class="fa-solid fa-download fa-2x text-info mb-3"></i>
+                            <img src="../images/pdf.svg" alt="" class="img-fluid mb-2 file-image" style="width: 50px;" data-bs-toggle="modal" data-bs-target="#imageModal">
+                            <h5 class="card-title">my-file.pdf</h5>
+                            <p class="card-text text-muted">Zana</p>
+                        </div>
+                        <div class="card-footer d-flex justify-content-between align-items-center bg-light">
+                            <span>20/06/2020</span>
+                            <span>5.5MB</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="#" class="btn btn-primary">
+                <i class="fa-solid fa-angles-up"></i> Upload Files
+            </a>
+        </div>
+    </div>
+</main>
+
+<!-- Modal لعرض الصور -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" alt="Image Preview" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script>
+    // عند الضغط على صورة لفتحها في نافذة منبثقة
+    document.querySelectorAll('.file-image').forEach(img => {
+        img.addEventListener('click', function () {
+            const src = this.getAttribute('src');
+            document.getElementById('modalImage').setAttribute('src', src);
+        });
+    });
+
+    // تصفية الملفات حسب النوع
+    document.querySelectorAll('.clickable').forEach(stat => {
+        stat.addEventListener('click', function () {
+            const filter = this.getAttribute('data-filter');
+            document.querySelectorAll('.file-box').forEach(box => {
+                if (filter === 'all' || box.getAttribute('data-type') === filter) {
+                    box.style.display = 'block';
+                } else {
+                    box.style.display = 'none';
+                }
+            });
+        });
+    });
+</script>

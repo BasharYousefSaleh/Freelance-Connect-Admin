@@ -1,0 +1,84 @@
+﻿@page
+@model HoorAdmin.Pages.Dashboard.jobsModel
+@{
+    Layout = "~/Pages/Dashboard/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+
+<div class="container mt-5" >
+    <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+        <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+            <h6 class="text-white text-capitalize ps-3" style="text-align:center"> إدارة الوظائف </h6>
+        </div>
+    </div>
+    <h1 class="text-center text-primary mb-4"> </h1>
+
+    <!-- جدول عرض الوظائف -->
+    <div class="table-responsive  card-header p-0 position-relative mt-n4 mx-3 z-index-2 ">
+        <table class="table table-bordered table-hover text-center">
+            <thead class="bg-warning text-dark">
+                <tr>
+                    <th>رقم الوظيفة</th>
+                    <th>العنوان</th>
+                    <th>الحالة</th>
+                    <th>الميزانية</th>
+                    <th>تاريخ الإنشاء</th>
+                    <th>صاحب العمل</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.Jobs != null && Model.Jobs.Any())
+                {
+                    foreach (var job in Model.Jobs)
+                    {
+                        <tr style="cursor: pointer;" onclick="window.location.href='@Url.Page("/Dashboard/JobDetails", new { id = job.Id })'">
+                            <td>@job.Id</td>
+                            <td>@job.Title</td>
+                            <td>
+                                @switch (job.Status)
+                                {
+                                    case JobStatus.Open:
+                                        <span class="badge bg-success">مفتوح</span>
+                                        ;
+                                        break;
+                                    case JobStatus.InContract:
+                                        <span class="badge bg-warning text-dark">في عقد</span>
+                                        ;
+                                        break;
+                                    case JobStatus.Closed:
+                                        <span class="badge bg-danger">مغلق</span>
+                                        ;
+                                        break;
+                                }
+                            </td>
+                            <td>@job.Budget.ToString("C")</td>
+                            <td>@job.CreatedOn.ToString("yyyy-MM-dd")</td>
+                            <td>@job.EmployerName</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="6" class="text-center text-danger">لا توجد وظائف متاحة.</td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+
+<script>
+
+    document.querySelectorAll('.nav-item').forEach(function (item) {
+        item.addEventListener('click', function () {
+            document.querySelectorAll('.nav-item').forEach(function (nav) {
+                nav.classList.remove('text-white active bg-gradient-dark');  // إزالة الكلاس من جميع الأزرار
+            });
+            item.classList.add('text-white active bg-gradient-dark');  // إضافة الكلاس للزر الذي تم الضغط عليه
+        });
+    });
+</script>

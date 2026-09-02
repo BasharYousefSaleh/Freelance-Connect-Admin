@@ -1,0 +1,179 @@
+﻿@page "{id}"
+@model HoorAdmin.Pages.Dashboard.MessageModel
+@{
+    ViewData["Title"] = "مراسلة المستخدم";
+    Layout = "~/Pages/Dashboard/Shared/_Layout.cshtml";
+}
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+
+<main style="background:#f1f5f9; padding: 30px; direction: rtl; text-align: right;">
+    <div class="main-content">
+        <!-- رأس الصفحة -->
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3 text-center">
+                <h6 class="text-white text-capitalize ps-3">مراسلة @Model.Recipient.FirstName @Model.Recipient.LastName</h6>
+            </div>
+        </div>
+
+        <!-- عرض المراسلات بين المستخدم والادمن -->
+        <!-- عرض المراسلات بين المستخدم والادمن -->
+        <div class="card-body" style="overflow-y:auto; height:400px; padding: 20px; background-color: #f7f7f7; border-radius: 10px;">
+            @foreach (var message in Model.Messages)
+            {
+                <div class="message @((message.SenderId == Model.AdminId) ? "admin-message" : "user-message")">
+                    <div class="message-header">
+                        <!-- أيقونة الشخص -->
+                        @if (message.SenderId == Model.AdminId)
+                        {
+                            <i class="fa-solid fa-user-shield message-icon"></i>
+                        }
+                        else
+                        {
+                            <i class="fa-solid fa-user message-icon"></i>
+                        }
+
+                        <!-- تفاصيل الرسالة -->
+                        <div class="message-details">
+                            <span class="message-sender">
+                                @if (message.SenderId == Model.AdminId)
+                                {
+                                    @:Admin
+                                }
+                                else
+                                {
+                                    @Model.Recipient.FirstName @Model.Recipient.LastName
+                                }
+                            </span>
+                            <span class="message-time">@message.CreatedOn.ToString("hh:mm tt")</span>
+                        </div>
+                    </div>
+                    <div class="message-content">
+                        <p>@message.Content</p>
+                    </div>
+                </div>
+            }
+        </div>
+
+
+        <!-- نموذج إرسال رسالة جديدة -->
+        <div class="card-footer" style="background-color: #f7f7f7; border-radius: 10px;">
+            <form method="post" asp-page-handler="SendMessage" asp-route-id="@Model.Recipient.Id">
+                <div class="form-group">
+                    <label for="Content">الرسالة</label>
+                    <textarea id="Content" name="Content" class="form-control" rows="4" placeholder="اكتب رسالتك هنا..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">إرسال</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<style>
+    /* أيقونة الرسائل */
+    .message-icon {
+        font-size: 20px;
+        color: #5e72e4; /* لون أيقونة المدير */
+        margin-left: 10px; /* تباعد الأيقونة عن النص */
+    }
+
+    /* لون مختلف للمستخدم */
+    .user-message .message-icon {
+        color: #4caf50; /* لون أيقونة المستخدم */
+    }
+
+    .message {
+        margin-bottom: 15px;
+        padding: 15px;
+        border-radius: 15px;
+        display: flex;
+        align-items: flex-start;
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        max-width: fit-content; /* تأكيد أن حجم الرسالة يتناسب مع المحتوى */
+    }
+
+    .admin-message {
+        background-color: #d1e7ff;
+        flex-direction: row-reverse; /* جعل الرسائل من اليمين لليسار */
+        align-self: flex-start; /* محاذاة الرسالة إلى اليسار */
+    }
+
+    /* محاذاة رسائل المستخدم إلى اليسار */
+    .user-message {
+        background-color: #e3ffe3;
+        flex-direction: row; /* جعل الرسائل من اليسار لليمين */
+        align-self: flex-end; /* محاذاة الرسالة إلى اليمين */
+    }
+
+    /* محتوى الرسالة */
+    .message-content p {
+        margin: 0;
+        padding: 0;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .message-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .message-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-left: 10px;
+    }
+
+    .message-details {
+        margin-left: 10px;
+        font-size: 12px;
+    }
+
+    .message-sender {
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .message-time {
+        font-size: 12px;
+        color: #aaa;
+    }
+
+    /* تنسيق حقل إدخال الرسالة */
+    .form-control {
+        border-radius: 12px; /* تعديل الحواف لتكون أكثر نعومة */
+        padding: 15px;
+        font-size: 16px;
+        height: auto; /* تأكد من أن حقل الإدخال يناسب النص */
+        resize: vertical; /* يمكن للمستخدم تعديل حجم الحقل */
+        background-color: #f3f3f3;
+        border: 1px solid #ccc;
+    }
+
+        .form-control:focus {
+            border-color: #5e72e4;
+            box-shadow: 0 0 5px rgba(94, 114, 228, 0.5);
+        }
+
+    /* تنسيق رأس الصفحة */
+    .card-header {
+        border-radius: 10px;
+    }
+
+    /* تنسيق الزر */
+    .btn-primary {
+        background-color: #5e72e4;
+        border: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        border-radius: 50px;
+    }
+
+        .btn-primary:hover {
+            background-color: #4c63c2;
+        }
+</style>

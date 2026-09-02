@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35327.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HoorAdmin", "HoorAdmin\HoorAdmin.csproj", "{45383DAB-B2CB-4A6C-A205-99DC6FBD6CBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45383DAB-B2CB-4A6C-A205-99DC6FBD6CBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45383DAB-B2CB-4A6C-A205-99DC6FBD6CBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45383DAB-B2CB-4A6C-A205-99DC6FBD6CBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45383DAB-B2CB-4A6C-A205-99DC6FBD6CBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89307721-573B-45C0-9FA4-23546101B529}
+	EndGlobalSection
+EndGlobal

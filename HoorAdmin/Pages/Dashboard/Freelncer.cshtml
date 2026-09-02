@@ -1,0 +1,72 @@
+﻿@page 
+@model HoorAdmin.Pages.Dashboard.FreelncerModel
+@{
+    var acount = 0;
+    ViewData["Title"] = "Freelncer";
+}
+@{
+    Layout = "~/Pages/Dashboard/Shared/_Layout.cshtml";
+}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+<main style="background:#f1f5f9">
+ 
+
+    <div class="main-content">
+
+        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+            <div class="bg-gradient-dark shadow-dark border-radius-lg pt-4 pb-3">
+                <h6 class="text-white text-capitalize ps-3" style="text-align:center"> جميع المستقلين  </h6>
+            </div>
+        </div>
+        <div class="title">
+            <h2>
+                @foreach (var freelancer in Model.Freelancers)
+                {
+                    acount++;
+                }
+                @acount.ToString()
+            </h2>
+        </div>
+        <div class="friends-main-boxes">
+            @foreach (var freelancer in Model.Freelancers)
+            {
+            <div class="friends-box-card">
+                <div class="friends-box-card-contact">
+                    <i class="fa-solid fa-phone"></i>
+                    <i class="fa-regular fa-envelope"></i>
+                </div>
+                <div class="friends-box-card-info">
+                    <img src="@freelancer.ProfileImageUrl" alt="" />
+                        <h4>@freelancer.LastName</h4>
+                    <p>JavaScript Developer</p>
+                </div>
+                <div class="friends-box-card-body">
+                    @* <h1>VIP</h1> *@
+                    <ul>
+                        <li>
+                                <i class="fa-regular fa-face-smile"></i><span>@freelancer.Jobs.Count Projects</span>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-code-commit"></i><span>15 Projects</span>
+                        </li>
+                        <li>
+                            <i class="fa-regular fa-newspaper"></i><span>25 Articles</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="friends-box-card-footer">
+                        <p>Joined @freelancer.CreatedOn.ToString("dd/MM/yyyy") </p>
+                    <div class="friends-box-card-footer-buttons">
+                            <a asp-page="/Dashboard/Profile" asp-route-id="@freelancer.Id">الحساب</a>
+                            <a asp-page="/Dashboard/Message" asp-route-id="@freelancer.Id">مراسلة</a>
+                        </div>
+                </div>
+            </div>
+          }
+        </div>
+    </div>
+
+</main>
+<script src="../js/script.js"></script>
+
